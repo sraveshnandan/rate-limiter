@@ -18,12 +18,6 @@ from rate_limiter.adapters.fastapi_adapter import RateLimiterMiddleware
 
 app = FastAPI(title="Rate Limiter Test Backend")
 
-# Debug: print available modules
-print(
-    "Available modules:",
-    [d for d in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, d))],
-)
-
 
 def custom_key_generator(request: Request):
     """Rate limit by x-user-id header if present, otherwise IP."""
@@ -41,8 +35,13 @@ def skip_rules(request: Request):
 
 
 # Initialize rate limiter
+redis_url = os.environ.get(
+    "REDIS_URL",
+    "rediss://default:gQAAAAAAAWJMAAIncDFkMjQ5Mzk0NGI5ZmI0M2YyYTc4ZDJmYzQ4YWYyODNkY3AxOTA3MDA@trusted-flea-90700.upstash.io:6379",
+)
+
 limiter = RateLimiter(
-    redis_url="rediss://default:gQAAAAAAAWJMAAIncDFkMjQ5Mzk0NGI5ZmI0M2YyYTc4ZDJmYzQ4YWYyODNkY3AxOTA3MDA@trusted-flea-90700.upstash.io:6379",
+    redis_url=redis_url,
     limits=[
         LimitTier(scope="global", limit=10, window=60),  # 10 requests / 60s
         LimitTier(scope="endpoint", limit=4, window=20),  # 4 requests / 20s
