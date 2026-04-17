@@ -8,8 +8,6 @@ from pydantic import BaseModel
 app_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(app_dir)
 sys.path.insert(0, root_dir)
-
-# Also add current directory
 sys.path.insert(0, os.getcwd())
 
 from rate_limiter.core import RateLimiter
@@ -104,5 +102,4 @@ async def update_config(config: ConfigUpdate):
 if __name__ == "__main__":
     import uvicorn
 
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
