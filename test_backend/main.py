@@ -4,8 +4,10 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# Add parent directory to sys.path to easily import rate_limiter natively
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add parent directory to sys.path
+app_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(app_dir)
+sys.path.insert(0, root_dir)
 
 from rate_limiter.core import RateLimiter
 from rate_limiter.config import LimitTier
