@@ -1,0 +1,10 @@
+# Rate limiter library
+redis>=5.0.0
+hiredis>=2.2.0
+
+# Backend dependencies
+fastapi
+uvicorn
+pydantic
+starlette
+python-dotenv
