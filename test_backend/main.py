@@ -9,11 +9,20 @@ app_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(app_dir)
 sys.path.insert(0, root_dir)
 
+# Also add current directory
+sys.path.insert(0, os.getcwd())
+
 from rate_limiter.core import RateLimiter
 from rate_limiter.config import LimitTier
 from rate_limiter.adapters.fastapi_adapter import RateLimiterMiddleware
 
 app = FastAPI(title="Rate Limiter Test Backend")
+
+# Debug: print available modules
+print(
+    "Available modules:",
+    [d for d in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, d))],
+)
 
 
 def custom_key_generator(request: Request):
